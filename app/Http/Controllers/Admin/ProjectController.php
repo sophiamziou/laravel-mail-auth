@@ -10,6 +10,9 @@ use App\Models\Technology;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewMail;
+use App\Models\Lead;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -56,6 +59,12 @@ class ProjectController extends Controller
         if ($request->has('techs')) {
             $project->technologies()->attach($request->techs);
         }
+        $new_lead = new Lead();
+        $new_lead->title = $new['title'];
+        $new_lead->content = $new['content'];
+        $new_lead->slug = $new['slug'];
+        $new_lead->save();
+        Mail::to('hello@sophia.com')->send(new NewMail($new_lead));
         return redirect()->route('admin.projects.index');
     }
 
