@@ -48,7 +48,6 @@ class ProjectController extends Controller
         $new = $request->validated();
         if ($request->hasFile('cover_image')) {
             $path = Storage::disk('public')->put('project_images', $request->cover_image);
-
             $new['cover_image'] = $path;
         }
         $slug = Project::generateSlug($request->title);
@@ -96,6 +95,14 @@ class ProjectController extends Controller
         $new = $request->validated();
         $slug = Project::generateSlug($request->title);
         $new['slug'] = $slug;
+        if ($request->has('cover_image')) {
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+            $path = Storage::disk('public')->put('project_images', $request->cover_image);
+
+            $new['cover_image'] = $path;
+        }
         $project->update($new);
         $project->technologies()->sync($request->techs);
         return redirect()->route('admin.projects.index');

@@ -47,6 +47,11 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="m-3">
+                    <h2>immagine</h2>
+                    <img src="{{ asset('storage/' . $project['cover_image']) }}" alt="{{ $project['title'] }}"
+                        class="w-50">
+                </div>
             </div>
         </div>
     </div>

@@ -31,7 +31,7 @@ class UpdateProjectRequest extends FormRequest
             'date_project' => ['nullable', 'date_format:Y-m-d'],
             'type_id' => ['nullable', 'exists:types,id'],
             'technologies' => ['nullable', 'exists:technologies,id'],
-
+            'cover_image' => ['nullable', 'image']
         ];
     }
     /**
@@ -46,6 +46,7 @@ class UpdateProjectRequest extends FormRequest
             'title.unique' => 'Il project con questo titolo è già presente nella pagina',
             'title.max' => 'Il titolo può essere lungo al massimo :max caratteri.',
             'date_project.date_format' => 'La data inserita non è nel formato corretto',
+            'cover_image.image' => 'Inserire un formato di immagine valido',
         ];
     }
 }
